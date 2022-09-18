@@ -12,7 +12,6 @@ import {
 import TextMessage from './TextMessage';
 import Typing from './Typing';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import LoadingSpinner from './LoadingSpinner';
 import { defaultLimit } from '../utils/constants';
 
 interface IProps {
@@ -32,7 +31,6 @@ const MessagesContainer = ({ isRecipientTyping }: IProps) => {
   );
 
   const fetchMoreData = async () => {
-    console.log('asdasd');
     try {
       const res = await messageApi.getMessagesByConversationId(
         conversationId!,
@@ -40,7 +38,6 @@ const MessagesContainer = ({ isRecipientTyping }: IProps) => {
         offset
       );
       if (res && res.data) {
-        console.log('>>check new data, ', res.data);
         dispatch(fetchMoreMessages(res.data));
         if (res.data.messages.length === 0 || res.data.messages.length < 10)
           setHasMore(false);
@@ -54,12 +51,13 @@ const MessagesContainer = ({ isRecipientTyping }: IProps) => {
     }
   };
 
-  if (!conversationMessages)
+  if (!conversationMessages) {
     return (
       <Flex w={'100%'} alignItems={'center'} justifyContent={'center'}>
         <Spinner color="blue.500" />
       </Flex>
     );
+  }
 
   return (
     <Box

@@ -38,7 +38,7 @@ const Notification = () => {
   const socket = useSocketContext();
   const toast = useToast();
   const dispatch = useAppDispatch();
-  const { friends, friendRequests, sentRequests } = useAppSelector(
+  const { friendRequests, sentRequests } = useAppSelector(
     (state) => state.friend
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -146,16 +146,20 @@ const Notification = () => {
     );
 
     socket.on('unfriend', ({ requestId }: { requestId: number }) => {
-      if (parseInt(conversationId!) === requestId) navigate('/');
       dispatch(removeFriend(requestId));
+      if (parseInt(window.location.pathname.split('/')[1]!) === requestId)
+        navigate('/');
     });
 
     return () => {
       socket.off('receiveRequest');
       socket.off('cancelRequest');
       socket.off('acceptRequest');
+      socket.off('unfriend');
     };
   }, [socket]);
+
+  console.log();
 
   return (
     <>

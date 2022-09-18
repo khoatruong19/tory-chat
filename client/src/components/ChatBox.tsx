@@ -134,7 +134,6 @@ const ChatBox = () => {
       dispatch(addMessage(payload));
       dispatch(updateConversation(payload.conversation));
       if (!payload.message.seen) {
-        ('New message');
         dispatch(increaseUnseenMessagesCount(payload.conversation.id));
       }
     });
@@ -192,12 +191,13 @@ const ChatBox = () => {
     setIsRecipientTyping(false);
   }, [conversationId]);
 
-  if (loadingFetchingMessages)
+  if (loadingFetchingMessages) {
     return (
       <Flex w={'100%'} alignItems={'center'} justifyContent={'center'}>
         <Spinner color="blue.500" />
       </Flex>
     );
+  }
 
   return (
     <Flex
