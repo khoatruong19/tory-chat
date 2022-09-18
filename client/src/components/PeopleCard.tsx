@@ -77,7 +77,6 @@ const PeopleCard = ({ user }: IProps) => {
         let newFriendRequests = friendRequests.filter(
           (request) => request.id !== id
         );
-        console.log({ newFriendRequests });
         dispatch(setFriendRequests(newFriendRequests));
         dispatch(getFriends());
       }

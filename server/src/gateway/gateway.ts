@@ -187,7 +187,6 @@ export class MyGateway implements OnGatewayConnection {
     @MessageBody() data: any,
     @ConnectedSocket() client: Socket,
   ) {
-    console.log('leave, ', data.conversationId);
     client.leave(`conversation-${data.conversationId}`);
     this.server.to(`conversation-${data.conversationId}`).emit('userLeave');
   }
@@ -219,3 +218,5 @@ export class MyGateway implements OnGatewayConnection {
       });
   }
 }
+
+//First traffic light active

@@ -63,12 +63,10 @@ const messageSlice = createSlice({
       action: PayloadAction<DeleteMessageEventPayload>
     ) => {
       const { conversationId, messageId } = action.payload;
-      console.log('Payload, ', action.payload);
       const conversationMessage = state.messages.find(
         (cm) => cm.id === conversationId
       );
       if (!conversationMessage) return;
-      console.log({ conversationMessage });
       const messageIndex = conversationMessage.messages.findIndex(
         (m) => m.id === messageId
       );

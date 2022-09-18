@@ -108,7 +108,6 @@ const ChatBox = () => {
     const formData = new FormData();
     formData.append('file', (e.target.files as FileList)[0]);
     formData.append('upload_preset', 'uploadTaskly');
-    console.log(process.env.REACT_APP_IMAGE_UPLOAD_URL);
     const data = await fetch(process.env.REACT_APP_IMAGE_UPLOAD_URL as string, {
       method: 'POST',
       body: formData,
@@ -135,7 +134,7 @@ const ChatBox = () => {
       dispatch(addMessage(payload));
       dispatch(updateConversation(payload.conversation));
       if (!payload.message.seen) {
-        console.log('New message');
+        ('New message');
         dispatch(increaseUnseenMessagesCount(payload.conversation.id));
       }
     });

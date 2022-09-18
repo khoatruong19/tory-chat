@@ -35,7 +35,6 @@ const ProfileModal = () => {
 
   const handleUpdateUser = async (info: UpdateUserInput) => {
     try {
-      console.log({ [info.field]: info.value });
       const res = await userApi.updateUser(info);
       if (res && res.data) {
         toast({
@@ -56,7 +55,6 @@ const ProfileModal = () => {
     const formData = new FormData();
     formData.append('file', (e.target.files as FileList)[0]);
     formData.append('upload_preset', 'uploadTaskly');
-    console.log(process.env.REACT_APP_IMAGE_UPLOAD_URL);
     const data = await fetch(process.env.REACT_APP_IMAGE_UPLOAD_URL as string, {
       method: 'POST',
       body: formData,
