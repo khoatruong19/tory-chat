@@ -11,7 +11,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { Friendship } from 'src/typeorm';
 import { UsersService } from 'src/users/users.service';
-import { Services } from 'src/utils/constants';
+import { Services, __prod__ } from 'src/utils/constants';
 import {
   CreateMessageResponse,
   DeleteMessageEventPayload,
@@ -20,7 +20,9 @@ import { GatewaySessionManager } from './gateway.session';
 
 @WebSocketGateway({
   cors: {
-    origin: 'http://localhost:3000',
+    origin: __prod__
+      ? process.env.CORS_ORIGIN_PROD
+      : process.env.CORS_ORIGIN_DEV,
     credentials: true,
   },
 })

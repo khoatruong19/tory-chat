@@ -11,22 +11,41 @@ import { FriendshipModule } from './friendship/friendship.module';
 import { GatewayModule } from './gateway/gateway.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { MessageModule } from './message/message.module';
+import { __prod__ } from './utils/constants';
+import * as path from 'path';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: '.env.development',
+      envFilePath: __prod__ ? '.env' : '.env.development',
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
       port: 5432,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME,
+      ...(__prod__
+        ? { url: process.env.DATABASE_URL }
+        : {
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+            database: process.env.DB_NAME,
+          }),
+      ...(__prod__
+        ? {
+            extra: {
+              ssl: {
+                require: true,
+                rejectUnauthorized: false,
+              },
+            },
+            ssl: true,
+          }
+        : {}),
       entities,
-      synchronize: true,
+      migrationsRun: true,
+      ...(__prod__ ? {} : { synchronize: true }),
+      migrations: [path.join(__dirname, '/migrations/*')],
     }),
     EventEmitterModule.forRoot({
       wildcard: false,

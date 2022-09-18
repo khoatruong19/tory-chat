@@ -7,7 +7,6 @@ import { IsNull, Not, Repository } from 'typeorm';
 import { User } from 'src/typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { of } from 'rxjs';
 
 @Injectable()
 export class AuthService {

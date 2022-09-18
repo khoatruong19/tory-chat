@@ -1,3 +1,5 @@
+export const __prod__ = process.env.NODE_ENV === 'production';
+
 export enum Routes {
   AUTH = 'auth',
   USERS = 'users',

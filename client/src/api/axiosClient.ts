@@ -1,6 +1,6 @@
 import axios from 'axios';
 import JwtManager from '../utils/jwt';
-const baseUrl = 'http://localhost:3001/api/';
+const baseUrl = process.env.REACT_APP_API_URL;
 
 const axiosClient = axios.create({
   baseURL: baseUrl,

@@ -4,7 +4,7 @@ import JwtManager from '../utils/jwt';
 
 const token = JwtManager.getToken();
 
-const socket = io('http://localhost:3001', {
+const socket = io(process.env.REACT_APP_SOCKET_URL as string, {
   extraHeaders: {
     Authorization: `Bearer ${token}`,
   },
